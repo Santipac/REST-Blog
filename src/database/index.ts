@@ -1,6 +1,6 @@
-import { prisma } from '..';
+import { prisma } from '..'
 
 export const dbConnection = async (): Promise<void> => {
-  await prisma.$connect();
-  console.log('🚀 DataBase is running!');
-};
+  await prisma.$connect()
+  console.log('🚀 DataBase is running!')
+}

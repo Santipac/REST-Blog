@@ -1,19 +1,20 @@
+/* eslint-disable import/first */
 import dotenv from 'dotenv'
+dotenv.config()
 import config from './config'
 import express from 'express'
-import postRoutes from './routes/posts.controller'
-import userRoutes from './routes/users.controller'
+import postRoutes from './routes/posts.routes'
+import userRoutes from './routes/users.routes'
 import cors from 'cors'
 import { PrismaClient } from '@prisma/client'
 import { dbConnection } from './database'
-dotenv.config()
 
 // Prisma instance
 export const prisma = new PrismaClient()
 // Server
 const server = express()
 
-// Mongo connection
+// DB connection
 dbConnection()
   .then(async () => {
     await prisma.$disconnect()
@@ -26,6 +27,7 @@ dbConnection()
 // Middlewares
 server.use(cors())
 server.use(express.json())
+server.use(express.urlencoded({ extended: true }))
 
 // Routes
 server.use('/api/posts', postRoutes)

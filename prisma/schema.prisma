@@ -11,13 +11,14 @@ datasource db {
 }
 
 model Post {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
-  imageURL String
-  brief    String
-  title    String
-  body     String
-  author   User   @relation(fields: [authorId], references: [id])
-  authorId String @db.ObjectId
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  imageURL    String
+  brief       String
+  title       String
+  body        String
+  publishedAt DateTime
+  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId    String   @db.ObjectId
 }
 
 model User {
