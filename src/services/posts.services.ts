@@ -1,12 +1,12 @@
 import { Post } from '@prisma/client'
 import { prisma } from '..'
 
-type returnedValue =
+export type returnedValue =
   | { success: boolean; data: Post }
   | { success: boolean; data: Post[] }
   | { success: boolean; data: string }
 
-type ServiceReturn = Promise<returnedValue>
+export type ServiceReturn = Promise<returnedValue>
 
 export const create = async ({
   imageURL,
@@ -45,7 +45,6 @@ export const getAll = async (): ServiceReturn => {
       author: {
         select: {
           name: true,
-          lastname: true,
         },
       },
     },
@@ -61,7 +60,6 @@ export const getUnique = async (id: string): ServiceReturn => {
         author: {
           select: {
             name: true,
-            lastname: true,
           },
         },
       },

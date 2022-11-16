@@ -7,7 +7,7 @@ import {
   update,
 } from '../services/posts.services'
 
-type controllerType = Promise<Response<any, Record<string, any>>>
+export type controllerType = Promise<Response<any, Record<string, any>>>
 
 export const createPost = async (
   req: Request,

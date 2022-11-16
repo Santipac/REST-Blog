@@ -30,8 +30,8 @@ server.use(express.json())
 server.use(express.urlencoded({ extended: true }))
 
 // Routes
-server.use('/api/posts', postRoutes)
-server.use('/api/users', userRoutes)
+server.use('/posts', postRoutes)
+server.use('/users', userRoutes)
 
 server.listen(config.PORT, () => {
   console.clear()
