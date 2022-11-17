@@ -7,22 +7,11 @@ import postRoutes from './routes/posts.routes'
 import userRoutes from './routes/users.routes'
 import cors from 'cors'
 import { PrismaClient } from '@prisma/client'
-import { dbConnection } from './database'
 
 // Prisma instance
 export const prisma = new PrismaClient()
 // Server
 const server = express()
-
-// DB connection
-dbConnection()
-  .then(async () => {
-    await prisma.$disconnect()
-  })
-  .catch(async e => {
-    console.error(e)
-    await prisma.$disconnect()
-  })
 
 // Middlewares
 server.use(cors())
