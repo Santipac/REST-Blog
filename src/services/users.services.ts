@@ -11,12 +11,17 @@ type UserService = Promise<
       user: null
     }
 >
-
-export const create = async (
-  email: string,
-  password: string,
+export interface UserInfo {
+  email: string
+  password: string
   name: string
-): UserService => {
+}
+
+export const create = async ({
+  email,
+  password,
+  name,
+}: UserInfo): UserService => {
   try {
     const created = await prisma.user.create({
       data: {

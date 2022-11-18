@@ -5,6 +5,7 @@ import config from './config'
 import express from 'express'
 import postRoutes from './routes/posts.routes'
 import userRoutes from './routes/users.routes'
+import authRoutes from './routes/auth.routes'
 import cors from 'cors'
 import { PrismaClient } from '@prisma/client'
 
@@ -21,6 +22,7 @@ server.use(express.urlencoded({ extended: true }))
 // Routes
 server.use('/posts', postRoutes)
 server.use('/users', userRoutes)
+server.use('/auth', authRoutes)
 
 server.listen(config.PORT, () => {
   console.clear()
