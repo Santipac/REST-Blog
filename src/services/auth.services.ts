@@ -3,7 +3,7 @@ import { create, getByEmail } from './users.services'
 import { User } from '@prisma/client'
 import { generateJWT } from '../helpers/jwt'
 
-type AuthenticateService = Promise<
+type LoginService = Promise<
   | {
       success: boolean
       user: null
@@ -44,10 +44,7 @@ export const register = async (
   }
 }
 
-export const authenticate = async (
-  email: string,
-  password: string
-): AuthenticateService => {
+export const login = async (email: string, password: string): LoginService => {
   const data = await getByEmail(email)
   if (data === null) {
     return {

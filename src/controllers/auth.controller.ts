@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { authenticate, register } from '../services/auth.services'
+import { login, register } from '../services/auth.services'
 import { controllerType } from './posts.controller'
 
 export const registerController = async (
@@ -18,17 +18,13 @@ export const loginController = async (
   res: Response
 ): controllerType => {
   const { email, password } = req.body
-  const { user, success, message, token } = await authenticate(email, password)
+  const { token, message } = await login(email, password)
   if (token !== undefined) {
     return res.json({
-      message,
-      token,
-      user,
+      accessToken: token,
     })
   }
   return res.status(401).json({
-    success,
     message,
-    user,
   })
 }

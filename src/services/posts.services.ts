@@ -9,20 +9,20 @@ export type returnedValue =
 export type ServiceReturn = Promise<returnedValue>
 
 export const create = async ({
-  imageURL,
-  brief,
   title,
+  brief,
   body,
-  authorId,
   publishedAt,
+  imageURL,
+  authorId,
 }: Post): ServiceReturn => {
   try {
     const created = await prisma.post.create({
       data: {
-        imageURL,
-        brief,
         title,
+        brief,
         body,
+        imageURL,
         publishedAt,
         author: {
           connect: { id: authorId },

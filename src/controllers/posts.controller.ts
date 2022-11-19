@@ -15,7 +15,6 @@ export const createPost = async (
 ): controllerType => {
   const created = await create(req.body)
   return res.status(created.success ? 201 : 400).json({
-    message: 'Post created successfully',
     data: created.data,
   })
 }
