@@ -6,7 +6,6 @@ import {
   getPostById,
   updatePostById,
 } from '../controllers/posts.controller'
-
 const router = Router()
 
 router.post('/', createPost)

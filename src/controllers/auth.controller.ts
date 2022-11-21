@@ -18,8 +18,13 @@ export const loginController = async (
   res: Response
 ): controllerType => {
   const { email, password } = req.body
-  const { token, message } = await login(email, password)
+  const { token, message, refreshToken } = await login(email, password)
   if (token !== undefined) {
+    res.cookie('jwt', refreshToken, {
+      httpOnly: true,
+      sameSite: 'none',
+      maxAge: 24 * 60 * 60 * 1000,
+    })
     return res.json({
       accessToken: token,
     })
@@ -28,3 +33,11 @@ export const loginController = async (
     message,
   })
 }
+
+// export const refreshTokenController = async (
+//   req: Request,
+//   res: Response
+// ): controllerType => {
+//   const cookies = req.cookies
+//   if (!cookies?.jwt) return res.sendStatus(401)
+// }
