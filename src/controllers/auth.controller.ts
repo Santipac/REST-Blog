@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+import { generateJWT } from '../helpers/jwt'
 import { login, register } from '../services/auth.services'
 import { controllerType } from './posts.controller'
 
@@ -18,13 +19,8 @@ export const loginController = async (
   res: Response
 ): controllerType => {
   const { email, password } = req.body
-  const { token, message, refreshToken } = await login(email, password)
+  const { token, message } = await login(email, password)
   if (token !== undefined) {
-    res.cookie('jwt', refreshToken, {
-      httpOnly: true,
-      sameSite: 'none',
-      maxAge: 24 * 60 * 60 * 1000,
-    })
     return res.json({
       accessToken: token,
     })
@@ -34,10 +30,14 @@ export const loginController = async (
   })
 }
 
-// export const refreshTokenController = async (
-//   req: Request,
-//   res: Response
-// ): controllerType => {
-//   const cookies = req.cookies
-//   if (!cookies?.jwt) return res.sendStatus(401)
-// }
+export const revalidateUserController = async (
+  req: Request,
+  res: Response
+): controllerType => {
+  const { id, email } = req
+  const token = await generateJWT(id, email)
+  return res.status(200).json({
+    ok: true,
+    token,
+  })
+}

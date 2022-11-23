@@ -16,7 +16,6 @@ export const verifyJWT = (
 ): validateMiddleware => {
   const authHeader = req.headers.authorization
   if (authHeader === undefined) return res.sendStatus(401)
-  console.log(authHeader)
   const token = authHeader.split(' ')[1]
   try {
     const decoded = jwt.verify(token, config.JWT_SECRET) as IDecode

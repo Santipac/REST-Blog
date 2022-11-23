@@ -1,7 +1,7 @@
 import { compare, hash } from 'bcrypt'
 import { create, getByEmail } from './users.services'
 import { User } from '@prisma/client'
-import { generateJWT, generateRefreshJWT } from '../helpers/jwt'
+import { generateJWT } from '../helpers/jwt'
 
 type LoginService = Promise<
   | {
@@ -9,13 +9,12 @@ type LoginService = Promise<
       user: null
       message: string
       token?: undefined
-      refreshToken?: undefined
     }
   | {
       success: boolean
       message: string
       token: string
-      refreshToken: string
+
       user: User
     }
 >
@@ -64,13 +63,11 @@ export const login = async (email: string, password: string): LoginService => {
     }
   }
   const token = await generateJWT(data.id, data.email)
-  const refreshToken = await generateRefreshJWT(data.id, data.email)
 
   return {
     success: true,
     message: 'User authenticated successfully!',
     token,
-    refreshToken,
     user: data,
   }
 }

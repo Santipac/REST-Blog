@@ -6,7 +6,7 @@ export const generateJWT = async (
 ): Promise<string> => {
   try {
     const payload = { id, email }
-    const token = jwt.sign(payload, config.JWT_SECRET, { expiresIn: '15s' })
+    const token = jwt.sign(payload, config.JWT_SECRET, { expiresIn: '10s' })
     return token
   } catch (error) {
     console.log(error)
