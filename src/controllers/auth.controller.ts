@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
-import { generateJWT } from '../helpers/jwt'
-import { login, register } from '../services/auth.services'
+import { AuthService } from '../services/auth.services'
+import { TokenService } from '../services/jwt.services'
 import { controllerType } from './posts.controller'
 
 export const registerController = async (
@@ -8,7 +8,11 @@ export const registerController = async (
   res: Response
 ): controllerType => {
   const { email, name, password } = req.body
-  const { user, success, message } = await register(name, email, password)
+  const { user, success, message } = await AuthService.register(
+    name,
+    email,
+    password
+  )
   return res.status(success ? 201 : 400).json({
     message,
     user,
@@ -19,7 +23,7 @@ export const loginController = async (
   res: Response
 ): controllerType => {
   const { email, password } = req.body
-  const { token, message } = await login(email, password)
+  const { token, message } = await AuthService.login(email, password)
   if (token !== undefined) {
     return res.json({
       accessToken: token,
@@ -35,7 +39,7 @@ export const revalidateUserController = async (
   res: Response
 ): controllerType => {
   const { id, email } = req
-  const token = await generateJWT(id, email)
+  const token = await TokenService.generate(id, email)
   return res.status(200).json({
     ok: true,
     token,
