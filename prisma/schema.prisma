@@ -13,9 +13,12 @@ model Post {
   brief       String
   title       String
   body        String
+  lectureTime Int
   publishedAt DateTime
   author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId    String
+  Category    Category @relation(fields: [categoryId], references: [id])
+  categoryId  Int
 }
 
 model User {
@@ -25,4 +28,10 @@ model User {
   name      String
   createdAt DateTime @default(now())
   Post      Post[]
+}
+
+model Category {
+  id    Int    @id @default(autoincrement())
+  name  String
+  posts Post[]
 }
